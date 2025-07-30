@@ -47,13 +47,13 @@
             return breakNodes;
         }
 
-        // Section management
+                // Section management
         function createSections(contentEl) {
             sections = [];
 
             console.log('Progressive Unfold: Looking for <!--fold:break --> comments...');
 
-            // Get the raw HTML content
+            // Get the raw HTML content but preserve original elements
             const htmlContent = contentEl.innerHTML;
             console.log('Progressive Unfold: Content length:', htmlContent.length);
 
@@ -64,40 +64,36 @@
             console.log('Progressive Unfold: Found', htmlSections.length, 'HTML sections');
 
             if (htmlSections.length <= 1) {
-                console.log('Progressive Unfold: No fold:break comments found, treating entire content as one section');
-                sections.push(Array.from(contentEl.children));
-                return sections.length;
+                console.log('Progressive Unfold: No fold:break comments found, disabling progressive unfold');
+                return 0; // Return 0 to indicate no sections, so plugin does nothing
             }
 
-            // Create temporary containers for each section's HTML
+            // Instead of recreating elements, map the existing elements to sections
+            // by counting elements in each HTML section and grouping original elements accordingly
+            const allOriginalElements = Array.from(contentEl.children);
+            let elementIndex = 0;
+
             htmlSections.forEach((sectionHtml, idx) => {
                 if (sectionHtml.trim() === '') return; // Skip empty sections
 
+                // Count elements in this HTML section
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = sectionHtml.trim();
+                const elementCount = tempDiv.children.length;
 
-                // Get all child elements from this section
-                const sectionElements = Array.from(tempDiv.children);
+                // Map to original elements
+                const sectionElements = allOriginalElements.slice(elementIndex, elementIndex + elementCount);
                 if (sectionElements.length > 0) {
                     sections.push(sectionElements);
-                    console.log(`Created section ${idx} with`, sectionElements.length, 'elements');
+                    console.log(`Created section ${idx} with`, sectionElements.length, 'original elements');
                 }
+
+                elementIndex += elementCount;
             });
 
-            // If we created sections, we need to replace the content with our new elements
-            if (sections.length > 1) {
-                console.log('Progressive Unfold: Replacing content with sectioned elements');
-                contentEl.innerHTML = '';
-
-                // Append all elements from all sections back to the content
-                sections.forEach(section => {
-                    section.forEach(element => {
-                        contentEl.appendChild(element);
-                    });
-                });
-            } else {
-                // Fallback to original elements
-                sections = [Array.from(contentEl.children)];
+            // Fallback to original elements if no sections found
+            if (sections.length === 0) {
+                sections.push(Array.from(contentEl.children));
             }
 
             console.log('Progressive Unfold: Created', sections.length, 'sections total');
@@ -285,6 +281,14 @@
 
             console.log('Progressive Unfold: Found content element:', contentEl.tagName, contentEl.id, 'with', contentEl.children.length, 'children');
 
+            // Debug: Check for zoom-related classes
+            const zoomImages = contentEl.querySelectorAll('.medium-zoom-image');
+            console.log('Progressive Unfold: Found', zoomImages.length, 'images with zoom classes');
+
+            // Debug: Check for images in general
+            const allImages = contentEl.querySelectorAll('img');
+            console.log('Progressive Unfold: Found', allImages.length, 'total images');
+
             const sectionCount = createSections(contentEl);
             if (sectionCount === 0) {
                 console.log('Progressive Unfold: No sections created, aborting');
@@ -326,8 +330,8 @@
 
         // Hook into Docsify lifecycle
         hook.doneEach(() => {
-            // Small delay to ensure content is fully rendered
-            setTimeout(initialize, 100);
+            // Longer delay to ensure zoom plugin is fully initialized
+            setTimeout(initialize, 1);
         });
 
         // Cleanup on route change
