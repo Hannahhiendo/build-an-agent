@@ -1,4 +1,4 @@
-# Build An Agent Hackathon
+# Build An Agent Workshop
 
 <img src="_static/robots/hero.png" alt="Hackathon Robot Character" style="float:right;max-width:300px;margin:25px;" />
 
@@ -6,7 +6,7 @@ AI Agents have quickly become the go-to architecture when making applications wi
 
 ## Learning Objectives
 
-By the end of this hackathon, you'll know how to create an agent that can:
+By the end of this workshop, you'll know how to create an agent that can:
 - Use tools to perform actions
 - Maintain conversation context
 - Make decisions about next steps

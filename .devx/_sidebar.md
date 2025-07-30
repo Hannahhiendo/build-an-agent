@@ -2,5 +2,6 @@
 * [Introduction to Agents](introduction_to_agents.md)
 * [Report Generation Agent](report_generation_agent.md)
 * [Learn the Code](learn_the_code.md)
-* [Share your Agent](share_your_agent.md)
+* [Publishing to GitHub](github_workflow.md)
+* [Create a Launchable](share_your_agent.md)
 

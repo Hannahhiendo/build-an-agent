@@ -9,7 +9,7 @@ You can also launch the Secrets Manager from the launcher.
 
 ## NGC API Key
 
-NGC is the NVIDIA GPU Cloud. This is the repository for all NVIDIA software, models, and more. For this hackathon, we will need an API Key in order to access models.
+NGC is the NVIDIA GPU Cloud. This is the repository for all NVIDIA software, models, and more. For this workshop, we will need an API Key in order to access models.
 
 <details>
 <summary>⚠️ Dont have an account?</summary>
@@ -26,7 +26,7 @@ Manage your API Keys from the [NGC console](https://org.ngc.nvidia.com/setup/api
 
 ## Tavily API Key
 
-Tavily is a search API designed for AI agents. It provides real-time web search capabilities that help agents gather up-to-date information from the internet. We will also need a Tavily API key for this hackathon.
+Tavily is a search API designed for AI agents. It provides real-time web search capabilities that help agents gather up-to-date information from the internet. We will also need a Tavily API key for this workshop.
 
 <details>
 <summary>⚠️ Don't have an account?</summary>
