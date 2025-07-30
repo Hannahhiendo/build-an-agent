@@ -7,8 +7,8 @@ Ready to make your AI agent easily runnable by others? Let's turn your GitHub re
 ## Prerequisites
 
 Before creating a launchable, make sure you have:
+- A public Github repo
 - Your agent code [published to GitHub](github_workflow.md)
-- A working agent that you've tested locally
 
 <!-- fold:break -->
 
