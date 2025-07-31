@@ -2,7 +2,7 @@
 
 <img src="_static/robots/hero.png" alt="Workshop Robot Character" style="float:right;max-width:300px;margin:25px;" />
 
-The Build An Agent Workshop teaches you how to create intelligent AI agents that can perform complex tasks using Large Language Models (LLMs) and tools. You'll build a **Document Generation Agent** - an intelligent system that can research any topic, create comprehensive outlines, write detailed sections, and compile professional reports automatically. Unlike simple workflows, agents are intelligent programs that can adapt to changing requirements, choose tools dynamically, and perform complex reasoning and planning.
+The Build An Agent Workshop teaches you how to create AI agents that can perform complex tasks using Large Language Models (LLMs) and tools. You'll build a **Report Generation Agent** - an intelligent system that can research any topic, create comprehensive outlines, write detailed sections, and compile professional reports automatically. Unlike simple workflows, agents are intelligent programs that can adapt to changing requirements, choose tools dynamically, and perform complex reasoning and planning.
 
 This workshop will help you get started building AI agents from scratch. At the end of this workshop, you will take home:
 
