@@ -4,6 +4,8 @@
 
 Ready to make your AI agent easily runnable by others? Let's turn your GitHub repository into a Brev launchable so others can use it!
 
+A **Launchable** is a shareable, one-click way to run any AI workflow or application. Think of it as a "Deploy to Cloud" button for your AI projects. Launchables pair your code with the exact hardware it needs (GPUs, memory, etc.), package all dependencies, and let anyone run your agent on their own account without having to set up environments or install anything.
+
 ## Prerequisites
 
 Before creating a launchable, make sure you have:
@@ -26,7 +28,7 @@ To get started making your own launchable, open the [Brev Console](https://brev.
 ## Step 2: Connect Your Repository
 
 - Select: `I have my files in a git repository` 
-- Enter the URL to your forked repository: `https://github.com/YOUR_USERNAME/build-an-agent.git`
+- Enter the URL to your forked repository: `https://github.com/YOUR_USERNAME/workshop-build-an-agent.git`
 - Select `With container(s)` for the runtime environment
 
 ![Launchable Step 1](img/launchable_1.png)

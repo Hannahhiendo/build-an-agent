@@ -9,7 +9,7 @@ Ready to save your AI agent work? Let's get your customized agent code published
 Before you can publish your changes, you'll need to have your own copy of this repository on GitHub. If you do not have a GitHub account, [sign up for free](https://github.com/join).
 
 Now you can
-[<i class="fa-solid fa-code-fork"></i> fork this repo](https://github.com/Hannahhiendo/build-an-agent/fork)
+[<i class="fa-solid fa-code-fork"></i> fork this repo](https://github.com/brevdev/workshop-build-an-agent/fork)
 to your own profile! 
 
 <!-- fold:break -->
@@ -21,8 +21,6 @@ For these next steps, we will do a few git commands. Open up a new <button oncli
 <!-- fold:break -->
 
 ## Step 3: Login to GitHub
-
-<img src="_static/robots/gitfu.png" alt="Deploy Robot" style="float:right; max-width:250px;margin:25px;" />
 
 In the terminal, we need to login to GitHub so we can push code changes.
 
@@ -53,7 +51,7 @@ Make sure to update the URL in this command with your GitHub Username.
 ```bash
 cd /project
 # Change the remote origin to point to your forked repository
-git remote set-url origin https://github.com/YOUR_USERNAME/build-an-agent.git
+git remote set-url origin https://github.com/YOUR_USERNAME/workshop-build-an-agent.git
 ```
 
 <!-- fold:break -->
