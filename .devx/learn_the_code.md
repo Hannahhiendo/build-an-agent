@@ -10,26 +10,35 @@ Ready to get started? Let's start off by building the smallest components until 
 
 <!-- fold:break -->
 
-## Available Tools
+## Agentic Tools
 
-The first step in creating an agent is defining the tools.
-Tools are functions that define the actions an agent can take.
-These functions allow agents to interact with external systems.
+### Tools Module
 
-Your agent will only be able to generate text or perform the tasks defined tools.
+To build an agent, you first need to define its tools.
+Tools are functions that let the agent take actions.
 
-We will define our tools in
+Your agent can either write text or use these tools.
+
+We will define our tools in a single Python module:
 <button onclick="openOrCreateFileInJupyterLab('code/docgen_agent/tools.py');"><i class="fa-brands fa-python"></i> code/docgen_agent/tools.py</button>.
 
-For our use case, we only need to allow our agent to search Tavily. We have called this tool
-<button onclick="goToLineAndSelect('code/docgen_agent/tools.py', 'def search_tavily');"><i class="fas fa-code"></i> search_tavily</button>.
-Notice the detailed documentation for this function. This is a [Google formatted docstring](https://google.github.io/styleguide/pyguide.html#383-functions-and-methods) and can be used to define extra metadata for the agent.
+<!-- fold:break -->
 
-Additional tools could be added to this file for use later use by our agent.
+### Tavily Tool
+
+For now, our agent just needs one tool: Tavily search.
+You can find it in
+<button onclick="goToLineAndSelect('code/docgen_agent/tools.py', 'def search_tavily');"><i class="fas fa-code"></i> search_tavily</button>.
+
+This function is well documented using a [Google style docstring](https://google.github.io/styleguide/pyguide.html#383-functions-and-methods). Adding this docstring helps the agent understand how the tool should be used.
+
+You can add more tools to this file later if needed.
 
 <!-- fold:break -->
 
 ## Topic Research Agent
+
+### Research Agent Architeture
 
 <img src="_static/robots/study.png" alt="Research Robot" style="float:right; max-width:300px;margin:25px;" />
 
@@ -37,32 +46,28 @@ Now that our tools are defined, we can create a simple agent to research a topic
 
 One of the simplest architectures for tool calling is called ReAct, short for Reasoning + Action.
 
-In this architecture, the agent will reason what actions to take, perform those actions, and then reason on the next steps.
-This is repeated until the agent decides there is no further action to take.
+In this setup, the agent thinks about what to do, takes an action, and then decides what to do next based on the result. This loop continues until no more actions are needed.
 
 <!-- fold:break -->
+
+### Research Agent Implementation
 
 This architecture has been implemented for basic research in
 <button onclick="openOrCreateFileInJupyterLab('code/docgen_agent/researcher.py');"><i class="fa-brands fa-python"></i> code/docgen_agent/researcher.py</button> and is represented in this diagram.
 
-```mermaid
-flowchart TD
-    START --> agent-->tool_calls
-    tool_calls -.yes.-> tools --> agent
-    tool_calls -.no ..-> END
-    tool_calls{has tool
-    calls?}
+<center>
 
-    subgraph REACT AGENT
-        agent
-        tool_calls
-        tools
-    end
-```
+![Reasearch Agent Architecture](img/research_agent.png)
+
+</center>
+
 <!-- fold:break -->
+
+### Researcher Agent Code Walkthrough
 
 The agent's state definition is called
 <button onclick="goToLineAndSelect('code/docgen_agent/researcher.py', 'class ResearcherState');"><i class="fas fa-code"></i> ResearcherState</button>.
+
 The `state` object is passed to each node in the graph.
 
 Each node in the graph manipulates the state using a function:
@@ -88,35 +93,29 @@ The Section Author agent will need to perform additional research, but only when
 
 <!-- fold:break -->
 
-Notice the architecture below. A gating function has been added before the ReAct style agent. An additional step has also been added after the ReAct agent to do the writing. This has been created in
+### Author Agent Implementation
+
+Notice the architecture below. A gating function has been added before the ReAct style agent. An additional step has also been added after the ReAct agent to do the writing.
+
+<center>
+
+![Author Agent Architecture](img/author_agent.png)
+
+</center>
+
+This has been created in
 <button onclick="openOrCreateFileInJupyterLab('code/docgen_agent/author.py');"><i class="fa-brands fa-python"></i> code/docgen_agent/author.py</button>.
-
-```mermaid
-flowchart TD
-    START --> needs_research -.no .-> writer --> END
-    needs_research -.yes.->agent
-    agent-->tool_calls
-    tool_calls -.yes.-> tools --> agent
-    tool_calls -.no .-> writer
-    needs_research{needs
-    research?}
-    tool_calls{has tool
-    calls?}
-
-    subgraph REACT AGENT
-        agent
-        tool_calls
-        tools
-    end
-```
 
 <!-- fold:break -->
 
+### Author Agent Code Walkthrough
+
 The agent's state definition is called
 <button onclick="goToLineAndSelect('code/docgen_agent/author.py', 'class SectionWriterState');"><i class="fas fa-code"></i> SectionWriterState</button>.
-The `state` object is passed to each node in the graph.
+Each node in the graph manipulates the state.
 
-Each node in the graph manipulates the state using a function:
+
+The following nodes will be used in this agent:
 - **needs research?:** <button onclick="goToLineAndSelect('code/docgen_agent/author.py', 'def needs_research');"><i class="fas fa-code"></i> needs_research</button>
 - **agent:** <button onclick="goToLineAndSelect('code/docgen_agent/author.py', 'def research_model');"><i class="fas fa-code"></i> research_model</button>
 - **tools:** <button onclick="goToLineAndSelect('code/docgen_agent/author.py', 'def tool_node');"><i class="fas fa-code"></i> tool_node</button>
@@ -126,14 +125,18 @@ Each node in the graph manipulates the state using a function:
 The graph is built and saved to
 <button onclick="goToLineAndSelect('code/docgen_agent/author.py', 'graph =');"><i class="fas fa-code"></i> graph</button>.
 
-If you would like to experiment with this agent, an
+<!-- fold:break -->
+
+### Author Agent Client
+
+If you would like to directly interact with this agent, an
 <button onclick="openOrCreateFileInJupyterLab('code/author_client.ipynb');"><i class="fa-solid fa-flask"></i> Author Agent Client</button> playground is available.
 
 <!-- fold:break -->
 
 ## Document Generation Agent
 
-<img src="_static/robots/supervisor.png" alt="Research Robot" style="float:right; max-width:300px;margin:25px;" />
+<img src="img/Animation.webp" alt="Research Robot" style="float:right; max-width:300px;margin:25px;border:0px" />
 
 Using these two agents, we can now put together our Document Generation Agent's workflow.
 
@@ -143,18 +146,22 @@ We simply need to research the topic, plan the document outline, write the secti
 
 <!-- fold:break -->
 
+### Agent Implementation
+
 This workflow is defined in
 <button onclick="openOrCreateFileInJupyterLab('code/docgen_agent/agent.py');"><i class="fa-brands fa-python"></i> code/docgen_agent/agent.py</button>.
+
 Compare to this diagram.
 
-```mermaid
-flowchart TD
-    START --> researcher
-    researcher --> report_planner -->
-    author --> report_author --> END
-    researcher([researcher agent])
-    author([author agent])
-```
+<center>
+
+![Document Generator Agent Architecture](img/doc_gen.png)
+
+</center>
+
+<!-- fold:break -->
+
+### Agent Code Walkthrough
 
 The agent's state definition is called
 <button onclick="goToLineAndSelect('code/docgen_agent/agent.py', 'class AgentState');"><i class="fas fa-code"></i> AgentState</button>.
@@ -174,9 +181,16 @@ If you would like to experiment with this agent, a
 
 <!-- fold:break -->
 
+### Agent Client
+
+If you would like to directly interact with this agent, an
+<button onclick="openOrCreateFileInJupyterLab('code/agent_client.ipynb');"><i class="fa-solid fa-flask"></i> Agent Client</button> playground is available.
+
+<!-- fold:break -->
+
 ## Prompts
 
-One part that has been conveniently set aside is the system prompts.
+There's one crucial ingredient we've been quietly ignoring: the system prompts.
 
 Every time an AI model is used, a system prompt is provided to tell the model what to do.
 

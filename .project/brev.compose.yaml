@@ -16,12 +16,12 @@ services:
                           count: all
                           driver: nvidia
         environment:
+            - LANGSMITH_TRACING=true
             - LANGSMITH_ENDPOINT=https://api.smith.langchain.com
             - LANGSMITH_PROJECT=sample-searching-agent
             - NGC_API_KEY=${NGC_API_KEY}
             - COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME:-devx}
             - SHELL=/bin/bash
-            - LANGSMITH_TRACING=true
         healthcheck:
             interval: 30s
             retries: 3
